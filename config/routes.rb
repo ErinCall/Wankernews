@@ -1,4 +1,6 @@
 Wankernews::Application.routes.draw do
+  get "login/login"
+
   match '/*wankernews_path', :to => "wanker#wank", :format => false
   root :to => "wanker#wank"
 

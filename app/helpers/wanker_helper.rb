@@ -1,0 +1,2 @@
+module WankerHelper
+end

@@ -5,6 +5,7 @@ class WankerController < ApplicationController
     page = agent.get "http://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
     html_text = page.body
     html_text = html_text.gsub(/Hack/, 'Wank')
+    html_text = html_text.gsub(/HACK/, 'WANK')
     html_text = html_text.gsub(/hack/i, 'wank')
     render :inline => html_text
   end

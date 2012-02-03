@@ -1,14 +1,11 @@
 require 'open-uri'
 class WankerController < ApplicationController
   def wank
-    @foo= ''
-    open("http://news.ycombinator.com#{ request.fullpath }") do |f|
-      k.each_line do |line|
-        line = line.gsub(/Hack/, 'Wank')
-        line = line.gsub(/hack/i, 'wank')
-        @foo += line
-      end
-    end
-    render :inline => @foo
+    agent = Mechanize.new
+    page = agent.get "http://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
+    html_text = page.body
+    html_text = html_text.gsub(/Hack/, 'Wank')
+    html_text = html_text.gsub(/hack/i, 'wank')
+    render :inline => html_text
   end
 end

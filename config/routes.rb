@@ -1,5 +1,6 @@
 Wankernews::Application.routes.draw do
-  match '/*path', :to => "wanker#wank"
+  match '/*wankernews_path', :to => "wanker#wank", :format => false
+  root :to => "wanker#wank"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

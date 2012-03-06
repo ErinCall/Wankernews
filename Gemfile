@@ -23,6 +23,8 @@ gem 'pg'
 
 gem 'mechanize', '2.0.1'
 
+gem "exception_notification_rails3", '~> 1.1', :require => 'exception_notifier'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

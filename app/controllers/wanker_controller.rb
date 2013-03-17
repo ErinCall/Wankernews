@@ -2,7 +2,7 @@ require 'open-uri'
 class WankerController < ApplicationController
   def wank
     agent = Mechanize.new
-    page = agent.get "http://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
+    page = agent.get "https://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
     html_text = page.body
     html_text = html_text.gsub(/Cloud/, 'Moon')
     html_text = html_text.gsub(/CLOUD/, 'MOON')

@@ -13,4 +13,9 @@ class WankerController < ApplicationController
     html_text = html_text.gsub(/hack/i, 'wank')
     render :inline => html_text
   end
+
+  def passthrough
+    original_location = "https://news.ycombinator.com#{ request.fullpath }"
+    redirect_to original_location
+  end
 end

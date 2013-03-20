@@ -6,9 +6,9 @@ module WankerHelper
     titlecase_source = source.capitalize
     titlecase_dest = dest.capitalize
 
-    plaintext.gsub!(Regexp.new(allcaps_source), allcaps_dest)
-    plaintext.gsub!(Regexp.new(titlecase_source), titlecase_dest)
-    plaintext.gsub!(Regexp.new(source), dest)
+    plaintext.gsub!(allcaps_source, allcaps_dest)
+    plaintext.gsub!(titlecase_source, titlecase_dest)
+    plaintext.gsub!(source, dest)
 
     plaintext
   end

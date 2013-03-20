@@ -4,15 +4,21 @@ class WankerController < ApplicationController
 
   def wank
     agent = Mechanize.new
-    page = agent.get "https://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
-    html_text = page.body
-    html_text = wankify('hack', 'wank', html_text)
-    html_text = wankify('cloud', 'moon', html_text)
-    html_text = wankify('woman', 'cat', html_text)
-    html_text = wankify('women', 'cats', html_text)
-    html_text = wankify('diamond', 'lasagna', html_text)
+    agent.read_timeout = 27 #seconds
+    begin
+      page = agent.get "https://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
+      html_text = page.body
+      html_text = wankify('hack', 'wank', html_text)
+      html_text = wankify('cloud', 'moon', html_text)
+      html_text = wankify('woman', 'cat', html_text)
+      html_text = wankify('women', 'cats', html_text)
+      html_text = wankify('diamond', 'lasagna', html_text)
 
-    render :inline => html_text
+      render :inline => html_text
+    rescue Net::HTTP::Persistent::Error => e
+      render :template => 'timeout'
+      ExceptionNotifier::Notifier.exception_notification(request.env, e).deliver
+    end
   end
 
   def passthrough

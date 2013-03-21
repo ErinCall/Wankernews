@@ -4,7 +4,9 @@ class WankerController < ApplicationController
 
   def wank
     agent = Mechanize.new
-    agent.read_timeout = ENV['HN_TIMEOUT'] || 10 #seconds
+    timeout_threshold = ENV['HN_TIMEOUT'] || 10 #seconds
+    timeout_threshold = timeout_threshold.to_i
+    agent.read_timeout = timeout_threshold
     begin
       page = agent.get "https://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
       html_text = page.body

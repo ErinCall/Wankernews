@@ -9,7 +9,10 @@ class WankerController < ApplicationController
     agent.read_timeout = timeout_threshold
     begin
       page = agent.get "https://news.ycombinator.com#{ request.fullpath }", :encoding => 'UTF-8'
-      html_text = page.body
+      html_text = ''
+      Timeout.timeout(timeout_threshold) do
+        html_text = page.body
+      end
       html_text = wankify('hack', 'wank', html_text)
       html_text = wankify('cloud', 'moon', html_text)
       html_text = wankify('woman', 'cat', html_text)
@@ -17,7 +20,8 @@ class WankerController < ApplicationController
       html_text = wankify('diamond', 'lasagna', html_text)
 
       render :inline => html_text
-    rescue Net::HTTP::Persistent::Error => e
+    rescue Net::HTTP::Persistent::Error,
+           Timeout::Error => e
       render :template => 'timeout'
       ExceptionNotifier::Notifier.exception_notification(request.env, e).deliver
     end
